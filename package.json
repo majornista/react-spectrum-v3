@@ -16,12 +16,17 @@
     "jest": "NODE_ICU_DATA=node_modules/full-icu jest",
     "copyrights": "babel-node --presets @babel/env ./scripts/addHeaders.js",
     "clean:icons": "babel-node --presets @babel/env ./scripts/cleanIcons.js",
-    "postinstall": "test -n \"$NOYARNPOSTINSTALL\" || ( (yarn wsrun --exclude-missing make-icons || true) && yarn wsrun --exclude-missing build )",
+    "postinstall": "test -n \"$NOYARNPOSTINSTALL\" || yarn build-icons",
+    "build-icons": "lerna run --scope=@spectrum-icons/* build",
+    "build-css": "lerna run --scope=spectrum-css-monorepo build",
     "plop": "plop",
     "chromatic": "CHROMATIC_APP_CODE=k5oflhpwx98 chromatic test --build-script-name build-storybook"
   },
   "workspaces": [
-    "packages/*/*"
+    "packages/*/*",
+    "spectrum-css",
+    "spectrum-css/components/*",
+    "spectrum-css/tools/*"
   ],
   "devDependencies": {
     "@actions/core": "^1.1.0",
