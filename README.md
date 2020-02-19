@@ -1,6 +1,6 @@
 # react-spectrum v3
 
-[Spectrum](http://spectrum.corp.adobe.com) UI components in React.
+[Spectrum](http://spectrum.corp.adobe.com) UI components in React
 
 ## Using react-spectrum in your project
 
