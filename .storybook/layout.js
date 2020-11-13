@@ -7,7 +7,6 @@ export function VerticalCenter({children, className, style}) {
       className={ clsx('react-spectrum-story', className) }
       style={style}
     >
-      <span style={{position: 'absolute', top: 0, left: 0}}>{REACT_VERSION}</span>
       { children }
     </div>
   );

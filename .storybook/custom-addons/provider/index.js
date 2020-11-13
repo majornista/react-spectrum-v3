@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react';
 import {ActionButton} from '@react-spectrum/button';
 import addons, { makeDecorator } from '@storybook/addons';
-import {Content} from '@react-spectrum/view';
+import {classNames} from '@react-spectrum/utils';
+import {Content, View} from '@react-spectrum/view';
+import {Dialog, DialogTrigger} from '@react-spectrum/dialog';
+import {Flex} from '@react-spectrum/layout';
 import {getQueryParams} from '@storybook/client-api';
 import {Provider} from '@react-spectrum/provider';
+import React, {useEffect, useState} from 'react';
 import {Text} from '@react-spectrum/text';
 import {themes, defaultTheme} from '../../constants';
-import {Dialog, DialogTrigger} from '@react-spectrum/dialog';
+import typographyStyles from '@adobe/spectrum-css-temp/components/typography/vars.css';
 
 document.body.style.margin = 0;
 
@@ -44,17 +47,51 @@ function ProviderUpdater(props) {
     };
   }, []);
 
+  if (props.context.kind && props.context.story) {
+    document.title = `${props.context.kind}: ${props.context.story} | Storybook`;
+  }
+
   return (
     <Provider theme={theme} colorScheme={colorScheme} scale={scaleValue} locale={localeValue} toastPlacement={toastPositionValue}>
-      <div style={{position: 'absolute', paddingTop: '20px', paddingLeft: '20px', paddingRight: '20px'}}>
-        {props.context.parameters.note && (<DialogTrigger type="popover">
-          <ActionButton>Note</ActionButton>
-          <Dialog>
-            <Content><Text>{props.context.parameters.note}</Text></Content>
-          </Dialog>
-        </DialogTrigger>)}
-      </div>
-      {storyReady && props.children}
+      <Flex direction="column" minHeight="100vh">
+        <View elementType="header">
+          <Flex
+            alignContent="center"
+            alignItems="center"
+            direction="row-reverse"
+            gap="size-150"
+            margin="size-150"
+            wrap="wrap-reverse">
+            {props.context.parameters.note && (
+              <div role="note">
+                <DialogTrigger type="popover">
+                  <ActionButton>Note</ActionButton>
+                  <Dialog>
+                    <Content><Text>{props.context.parameters.note}</Text></Content>
+                  </Dialog>
+                </DialogTrigger>
+              </div>
+            )}
+            <output aria-label="React version" aria-live="off">{REACT_VERSION}</output>
+            {storyReady && props.context.kind && (
+              <h1 className={classNames(typographyStyles, 'spectrum-Heading--pageTitle')} style={{flexGrow: 1}}>
+                {props.context.kind}
+                {props.context.story && <div className={classNames(typographyStyles, 'spectrum-Heading--subtitle2')}>{props.context.story}</div>}
+              </h1>
+            )}
+          </Flex>
+        </View>
+        <main
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            flexGrow: 1,
+            justifyContent: 'center',
+            marginBlockEnd: 'var(--spectrum-global-dimension-size-150)'
+          }}>
+          {storyReady && props.children}
+        </main>
+      </Flex>
     </Provider>
   );
 }
