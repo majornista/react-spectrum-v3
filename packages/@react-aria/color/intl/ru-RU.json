@@ -1,3 +1,4 @@
 {
-  "twoDimensionalSlider": "Двумерный ползунок"
+  "twoDimensionalSlider": "Двумерный ползунок",
+  "colorNameAndValue": "{name}: {value}"
 }
