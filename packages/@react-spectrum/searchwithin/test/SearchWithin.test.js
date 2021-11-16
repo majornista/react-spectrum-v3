@@ -103,9 +103,9 @@ describe('SearchWithin', function () {
 
     let listbox = getByRole('listbox');
     let label = getAllByText('Test')[0];
-    expect(listbox).toHaveAttribute('aria-labelledby', `${label.id} ${group.id} ${picker.id}`);
-    expect(searchfield).toHaveAttribute('aria-labelledby', `${label.id} ${group.id}`);
-    expect(group).toHaveAttribute('aria-labelledby', `${label.id} ${group.id}`);
+    expect(listbox).toHaveAttribute('aria-labelledby', `${label.id} ${picker.id}`);
+    expect(searchfield).toHaveAttribute('aria-labelledby', `${label.id} ${picker.id} ${picker.childNodes[0].id}`);
+    expect(group).toHaveAttribute('aria-labelledby', `${label.id}`);
   });
 
   it('isDisabled=true disables both the searchfield and picker', function () {
@@ -152,8 +152,8 @@ describe('SearchWithin', function () {
 
     expect(searchfield).not.toHaveAttribute('aria-required');
 
-    expect(searchfield).toHaveAttribute('aria-labelledby', `${label.id} ${group.id}`);
-    expect(group).toHaveAttribute('aria-labelledby', `${label.id} ${group.id}`);
+    expect(searchfield).toHaveAttribute('aria-labelledby', `${label.id} ${picker.id} ${picker.childNodes[0].id}`);
+    expect(group).toHaveAttribute('aria-labelledby', `${label.id}`);
 
     expect(searchfield.classList.contains('is-quiet')).toBeFalsy();
     expect(picker.classList.contains('spectrum-Dropdown--quiet')).toBeFalsy();
@@ -170,7 +170,7 @@ describe('SearchWithin', function () {
     expect(picker).toHaveAttribute('aria-label', 'Search within');
 
     expect(group).not.toHaveAttribute('aria-labelledby');
-    expect(searchfield).toHaveAttribute('aria-labelledby', group.id);
+    expect(searchfield).toHaveAttribute('aria-labelledby', `${group.id} ${picker.id} ${picker.childNodes[0].id}`);
     expect(picker).toHaveAttribute('aria-labelledby', `${group.id} ${picker.id} ${picker.childNodes[0].id}`);
   });
 
@@ -185,7 +185,7 @@ describe('SearchWithin', function () {
     expect(picker).toHaveAttribute('aria-label', 'Search within');
 
     expect(group).not.toHaveAttribute('aria-labelledby');
-    expect(searchfield).toHaveAttribute('aria-labelledby', group.id);
-    expect(picker).toHaveAttribute('aria-labelledby', `${group.id} ${picker.id} ${picker.childNodes[0].id}`);
+    expect(searchfield).toHaveAttribute('aria-labelledby', `${picker.id} ${picker.childNodes[0].id}`);
+    expect(picker).toHaveAttribute('aria-labelledby', `${picker.id} ${picker.childNodes[0].id}`);
   });
 });
